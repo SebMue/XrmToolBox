@@ -25,6 +25,12 @@ namespace XrmToolBox
         {
             try
             {
+                // Enable High DPI
+                if (Environment.OSVersion.Version.Major >= 6)
+                    SetProcessDPIAware();
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
                 if (!CheckRequiredAssemblies())
                 {
                     return;
@@ -305,5 +311,9 @@ namespace XrmToolBox
             // Delete zip file
             File.Delete(pluginsZipFilePath);
         }
+
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool SetProcessDPIAware();
     }
 }
